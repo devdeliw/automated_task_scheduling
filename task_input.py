@@ -99,9 +99,9 @@ def get_tasks():
                 
                 continue_loop = False
                 if count > 2: 
-                    speak(f"Great! I\'ll send you emails 30 minutes and 10 minutes prior to your {count - 1} tasks today. See you then!")
+                    speak(f"Great! I\'ll send you an email 30 minutes and 10 minutes before your {count - 1} tasks today. See you then!")
                 else: 
-                    speak(f"Great! I\'ll send you emails 30 minutes and 10 minutes prior to your {count - 1} task today. See you then!")
+                    speak(f"Awesome! I\'ll send you an email 30 minutes and 10 minutes before your task today. See you then!")
                 break
 
             task_name, start_time, end_time = parse_task_string(task_name_full)
