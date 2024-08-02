@@ -32,7 +32,7 @@ def format_datetime(dt):
     return f"{month_name} {day}{day_suffix}, at {hour}{am_pm}"
 
 def parse_task_string(task_string):
-
+    # convert a clock-like string into military time format
     time_pattern = re.compile(
         r'(\d{1,2}(:\d{2})?\s*[ap]\.?m\.?)\s*to\s*(\d{1,2}(:\d{2})?\s*[ap]\.?m\.?)',
         re.IGNORECASE
@@ -57,6 +57,10 @@ def parse_task_string(task_string):
     return task_name, start_time, end_time
 
 def get_tasks(): 
+    # --------------------- #
+    # get the tasks for today
+    # --------------------- #
+    
     tasks = []
     count = 1 
 
