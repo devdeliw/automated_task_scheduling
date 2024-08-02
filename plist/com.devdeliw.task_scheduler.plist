@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.devdeliw.task_scheduler</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Users/devaldeliwala/miniconda3/bin/python</string>
+		<string>/Users/devaldeliwala/calendar_AI/task_check.py</string>
+	</array>
+	<key>StandardErrorPath</key>
+	<string>/tmp/com.devdeliw.task_scheduler.err</string>
+	<key>StandardOutPath</key>
+	<string>/tmp/com.devdeliw.task_scheduler.out</string>
+	<key>StartCalendarInterval</key>
+	<dict>
+		<key>Hour</key>
+		<string>01</string>
+		<key>Minute</key>
+		<string>59</string>
+	</dict>
+</dict>
+</plist>
