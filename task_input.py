@@ -93,7 +93,10 @@ def get_tasks():
             task_name_full = transcript[0][0]
             confidence = transcript[0][1]
 
-            if 'for today' in task_name_full.lower() or 'done' in task_name_full.lower():
+
+            if ('for today' in task_name_full.lower() or 'done' in task_name_full.lower() or 
+                'all' in task_name_full.lower() or 'that\'s it' in task_name_full.lower()):
+                
                 continue_loop = False
                 if count > 2: 
                     speak(f"Great! I\'ll send you emails 30 minutes and 10 minutes prior to your {count - 1} tasks today. See you then!")
