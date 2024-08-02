@@ -56,10 +56,10 @@ def parse_task_string(task_string):
     
     return task_name, start_time, end_time
 
-
 def get_tasks(): 
     tasks = []
-    count = 1
+    count = 1 
+
     ordinals = {
         1: 'first', 2: 'second', 3: 'third', 4: 'fourth', 5: 'fifth',
         6: 'sixth', 7: 'seventh', 8: 'eighth', 9: 'ninth', 10: 'tenth'
@@ -80,16 +80,16 @@ def get_tasks():
     while continue_loop: 
         if count == 1: 
             speak(f"What's your {ordinals.get(count, 'unknown')} task for today?")
-        if count == 2: 
+        elif count == 2: 
             speak(f"Got it. What's your {ordinals.get(count, 'unknown')} task? ")
-        if count == 3: 
+        elif count == 3: 
             speak(f"Alright. What's your {ordinals.get(count, 'unknown')} task? ")
-        if count > 3: 
+        else: 
             speak(f"What's your {ordinals.get(count, 'unknown')} task")
 
         success = False
         while not success: 
-            transcript = run(duration = 8)
+            transcript = run(duration = 10)
             task_name_full = transcript[0][0]
             confidence = transcript[0][1]
 
@@ -107,6 +107,7 @@ def get_tasks():
 
             correct = run(duration = 5)
             affirmative_pattern = re.compile(r'\b(yes|yeah|yep|yup|indeed)\b', re.IGNORECASE)
+
             if affirmative_pattern.search(correct[0][0].strip()):
                 tasks.append({
                     'name': task_name, 
@@ -114,10 +115,10 @@ def get_tasks():
                     'end_time': end_time,
                     'status': True
                 })
-
-                success = True
+                print('test 2')
+                break
             else: 
-                speak(f"Maybe try again?")
+                speak("Maybe try again?")
 
         count += 1
 

@@ -1,5 +1,5 @@
 from task_input import * 
-import smtplib, plistlib, argparse
+import smtplib, plistlib, argparse, shutil
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -150,19 +150,46 @@ class Run:
         self.tell_iterm(f"/Users/devaldeliwala/miniconda3/bin/python /Users/devaldeliwala/calendar_AI/task_check.py --task \"{task['name']}\"")
         return 
 
+    def format_duration(self, duration):
+        total_seconds = int(duration.total_seconds())
+        hours, remainder = divmod(total_seconds, 3600)
+        minutes, _ = divmod(remainder, 60)
+
+        if hours > 0 and minutes > 0:
+            return f"{hours} hours and {minutes} minutes"
+        elif hours > 0:
+            return f"{hours} hours"
+        elif minutes > 0:
+            return f"{minutes} minutes"
+        else:
+            return "less than a minute"
+
     def notify_task(self, task): 
         start_time = datetime.strptime(task['start_time'], "%H:%M")
         end_time = datetime.strptime(task['end_time'], "%H:%M")
         duration = end_time - start_time
 
-        print(f"{task['name']} has started")
+        speak(f"{task['name']} has started. You have {self.format_duration(duration)} remaining.")
+
+        terminal_size = shutil.get_terminal_size()
+        width = terminal_size.columns
+        padding = (width - len(task['name'])) // 2
+
+        print("\n")
+        print('‾' * width)
+        print(' ' * padding + task['name'])
+        print('‾' * width)
+        print("\n")
 
         while duration > timedelta(0): 
             print(f"Time Remaining: {duration}", end = '\r')
             duration -= timedelta(seconds = 1)
             time.sleep(1)
 
-        print(f"{task['name']} completed")
+        if random.randint(1, 2) == 1: 
+            speak(f"{task['name']} completed. Good Job.")
+        else: 
+            speak(f"{task['name']} completed. Excellent Job.")
 
         return
 
