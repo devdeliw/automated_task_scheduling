@@ -1,11 +1,12 @@
-import time, random, shutil, os, sys
+import time, random, shutil, os, sys, re
 import pandas as pd
 from datetime import datetime, timedelta
 from google_tts import speak
+from google_stt import run
 from task_check import * 
 
 
-def loading_animation(duration = random.randint(1, 4), interval = 0.3): 
+def loading_animation(duration = random.randint(1, 4), interval = 0.5): 
     # fake loading animation
     end_time = time.time() + duration
     message = 'Starting Up'
@@ -30,9 +31,39 @@ def format_datetime(dt):
 
     return f"{month_name} {day}{day_suffix}, at {hour}{am_pm}"
 
+def parse_task_string(task_string):
+
+    time_pattern = re.compile(
+        r'(\d{1,2}(:\d{2})?\s*[ap]\.?m\.?)\s*to\s*(\d{1,2}(:\d{2})?\s*[ap]\.?m\.?)',
+        re.IGNORECASE
+    )
+    
+    match = time_pattern.search(task_string)
+    
+    if not match:
+        raise ValueError("Time pattern not found in the string")
+    
+    start_time_str, _, end_time_str, _ = match.groups()
+    
+    def convert_time(time_str):
+        time_str = re.sub(r'[\.\-\s]', '', time_str.lower())
+        return datetime.strptime(time_str, '%I:%M%p') if ':' in time_str else datetime.strptime(time_str, '%I%p')
+    
+    start_time = convert_time(start_time_str).strftime('%H:%M')
+    end_time = convert_time(end_time_str).strftime('%H:%M')
+    
+    task_name = task_string.split('from')[0].strip()
+    
+    return task_name, start_time, end_time
+
+
 def get_tasks(): 
     tasks = []
     count = 1
+    ordinals = {
+        1: 'first', 2: 'second', 3: 'third', 4: 'fourth', 5: 'fifth',
+        6: 'sixth', 7: 'seventh', 8: 'eighth', 9: 'ninth', 10: 'tenth'
+    }
 
     # prints output to match terminal width
     terminal_size = shutil.get_terminal_size()
@@ -40,25 +71,53 @@ def get_tasks():
 
     # good morning message
     date_time_str = format_datetime(datetime.now())
-    good_morning =  f"Hi Deval, good morning! It is currently {date_time_str}. What are your tasks for today?"
+    good_morning =  f"Hi Deval, good morning! It is currently {date_time_str}"
 
-    print(good_morning)
+    speak(good_morning)
 
     # inputting tasks for the day
-    while True: 
-        print(f"Task {count}")
-        task_name = input("Enter the name of the task (or 'done' to finish): ")
-        if task_name.lower() == 'done' or task_name.lower() == 'done ':
-            break
-        start_time = input("Enter the start time (HH:MM): ")
-        end_time = input("Enter the end time (HH:MM): ")
+    continue_loop = True
+    while continue_loop: 
+        if count == 1: 
+            speak(f"What's your {ordinals.get(count, 'unknown')} task for today?")
+        if count == 2: 
+            speak(f"Got it. What's your {ordinals.get(count, 'unknown')} task? ")
+        if count == 3: 
+            speak(f"Alright. What's your {ordinals.get(count, 'unknown')} task? ")
+        if count > 3: 
+            speak(f"What's your {ordinals.get(count, 'unknown')} task")
 
-        tasks.append({
-            'name': task_name, 
-            'start_time': start_time, 
-            'end_time': end_time,
-            'status': True
-        })
+        success = False
+        while not success: 
+            transcript = run(duration = 8)
+            task_name_full = transcript[0][0]
+            confidence = transcript[0][1]
+
+            if 'for today' in task_name_full.lower() or 'done' in task_name_full.lower():
+                continue_loop = False
+                if count > 2: 
+                    speak(f"Great! I\'ll send you emails 30 minutes and 10 minutes prior to your {count - 1} tasks today. See you then!")
+                else: 
+                    speak(f"Great! I\'ll send you emails 30 minutes and 10 minutes prior to your {count - 1} task today. See you then!")
+                break
+
+            task_name, start_time, end_time = parse_task_string(task_name_full)
+
+            speak(f"I heard {task_name_full} with a confidence of {confidence} percent. Is that correct?")
+
+            correct = run(duration = 5)
+            affirmative_pattern = re.compile(r'\b(yes|yeah|yep|yup|indeed)\b', re.IGNORECASE)
+            if affirmative_pattern.search(correct[0][0].strip()):
+                tasks.append({
+                    'name': task_name, 
+                    'start_time': start_time, 
+                    'end_time': end_time,
+                    'status': True
+                })
+
+                success = True
+            else: 
+                speak(f"Maybe try again?")
 
         count += 1
 
@@ -70,6 +129,6 @@ def get_tasks():
     run_instance.load_tasks()
     run_instance.earliest_time()
 
-if __name__ == "__main__": 
+if __name__ == "__main__":
     loading_animation()
     get_tasks()
