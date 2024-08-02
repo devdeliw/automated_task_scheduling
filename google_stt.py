@@ -86,6 +86,7 @@ def transcribe_speech(audio_file = 'output_16bit.wav'):
     return transcripts
 
 def run(duration = 5): 
+    # script to run whole process
     record(duration = duration)
     convert_audio()
     transcripts = transcribe_speech()

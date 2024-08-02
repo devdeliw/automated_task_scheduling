@@ -60,7 +60,7 @@ def get_tasks():
     # --------------------- #
     # get the tasks for today
     # --------------------- #
-    
+
     tasks = []
     count = 1 
 
@@ -110,22 +110,31 @@ def get_tasks():
 
             task_name, start_time, end_time = parse_task_string(task_name_full)
 
-            speak(f"I heard {task_name_full} with a confidence of {confidence} percent. Is that correct?")
+            if int(confidence) < 90: 
+                speak(f"I heard {task_name_full} with a confidence of {confidence} percent. Is that correct?")
 
-            correct = run(duration = 5)
-            affirmative_pattern = re.compile(r'\b(yes|yeah|yep|yup|indeed)\b', re.IGNORECASE)
+                correct = run(duration = 5)
+                affirmative_pattern = re.compile(r'\b(yes|yeah|yep|yup|indeed)\b', re.IGNORECASE)
 
-            if affirmative_pattern.search(correct[0][0].strip()):
-                tasks.append({
-                    'name': task_name, 
-                    'start_time': start_time, 
-                    'end_time': end_time,
-                    'status': True
-                })
-                print('test 2')
-                break
+                if affirmative_pattern.search(correct[0][0].strip()):
+                    tasks.append({
+                        'name': task_name, 
+                        'start_time': start_time, 
+                        'end_time': end_time,
+                        'status': True
+                    })
+                    break
+                else: 
+                    speak("Maybe try again?")
             else: 
-                speak("Maybe try again?")
+                tasks.append({
+                        'name': task_name, 
+                        'start_time': start_time, 
+                        'end_time': end_time,
+                        'status': True
+                })
+                break
+
 
         count += 1
 
