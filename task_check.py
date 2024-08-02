@@ -3,7 +3,7 @@ import smtplib, plistlib, argparse, shutil
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-email_password = 'email_pass.txt'
+email_password = '/Users/devaldeliwala/calendar_AI/email_pass.txt'
 with open(email_password, 'r') as file: 
     EMAIL_PASS = file.read()
 

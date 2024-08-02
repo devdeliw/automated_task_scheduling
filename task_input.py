@@ -113,7 +113,7 @@ def get_tasks():
             if int(confidence) < 90: 
                 speak(f"I heard {task_name_full} with a confidence of {confidence} percent. Is that correct?")
 
-                correct = run(duration = 5)
+                correct = run(duration = 3)
                 affirmative_pattern = re.compile(r'\b(yes|yeah|yep|yup|indeed)\b', re.IGNORECASE)
 
                 if affirmative_pattern.search(correct[0][0].strip()):
@@ -134,7 +134,6 @@ def get_tasks():
                         'status': True
                 })
                 break
-
 
         count += 1
 
