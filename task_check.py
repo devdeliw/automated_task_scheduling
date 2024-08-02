@@ -3,6 +3,10 @@ import smtplib, plistlib, argparse, shutil
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+email_password = 'email_pass.txt'
+with open(email_password, 'r') as file: 
+    EMAIL_PASS = file.read()
+
 class Run: 
 
     def __init__(self): 
@@ -19,6 +23,7 @@ class Run:
         return tasks 
 
     def update_plist(self, plist_path, new_schedule): 
+        # update plist launch agent 
         tasks = self.tasks
 
         if not os.path.exists(plist_path): 
@@ -35,7 +40,7 @@ class Run:
         return
 
     def earliest_time(self):
-
+        # updates plist files and unloads and loads all launch agents
         def adjust_time(time_dict, minutes_to_subtract):
 
             hour = int(time_dict['Hour'])
@@ -76,7 +81,7 @@ class Run:
         return 
 
     def tell_iterm(self, script): 
-
+        # reusable osascript
         script = script.replace("\"", "\\\"")
 
         string = f"""
@@ -98,6 +103,7 @@ class Run:
         return
 
     def check_and_notify(self): 
+        # checks time and runs email reminders or an event script if time matches
         tasks = self.tasks
 
         current_time = datetime.now().strftime("%H:%M")
@@ -125,10 +131,11 @@ class Run:
                 break
 
     def run_reminder(self, task, amount): 
+        # emails me
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587
         username = 'devaldeliwala04@gmail.com'
-        password = 'vngh nqah ihyo zqoa'
+        password = EMAIL_PASS
         from_email = 'devaldeliwala04@gmail.com'
         to_email = 'devaldeliwala@berkeley.edu'
         subject = f"`{task['name']}` starts in 10 minutes!"
