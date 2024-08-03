@@ -85,7 +85,7 @@ That completes the installation!
 
 ## Limitations
 
-Currently, when talking back to the program, your transcribed audio has to be in the form `*<task name> from <start_time> pm/am or p.m./a.m. to <end_time> pm/am or p.m./a.m.*`
+Currently, when talking back to the program, your transcribed audio has to be in the form **\`<task name> from <start_time> pm/am or p.m./a.m. to <end_time> pm/am or p.m./a.m\`**
 
 You have to input your tasks every day. This does not have multi-day support. Every morning when the program starts, you input your tasks for that day only. Although I like this aspect as it semi-forces me to wake up.
 
