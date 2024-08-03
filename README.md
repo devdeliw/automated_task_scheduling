@@ -8,7 +8,7 @@ This project was a successful attempt to pseudo-force me into waking up early ev
 - You can then **talk back** to the program, stating, for example, "Studying Quantum Mechanics from 3pm to 6pm."
 - If the `sst` transcription has a confidence below 90%, it will ask for confirmation to continue to the next task or allow you to repeat yourself otherwise.
 - You can state as many tasks as you like. When you say anything like "That's all for today!" or "I am done," the program stores all your spoken tasks and updates `LaunchAgents` to the task start times.
-- 30 minutes and 10 minutes before a certain task, the program ***will send you an email*** reminding you of the task. When the task begins, the program reboots and states: "Studying Quantum Mechanics has begun, you have 3 hours remaining."
+- 30 minutes and 10 minutes before a certain task, the program ***will send you an email*** reminding you of the task. When the task begins, the program reboots and states: "Studying Quantum Mechanics has begun, you have 3 hours remaining." It will display a countdown timer. 
 
 ## Installation for macOS
 
@@ -78,4 +78,16 @@ Now the rest is simple. First, run `git clone https://github.com/devdeliw/automa
    - Within the `tell_iterm` method, the `string` variable contains a script for running the program in `iTerm2`; you may need to change this to fit your own terminal if you do not use `iTerm2`.
    - **EMAIL SUPPORT**: Within the `run_reminder()` method, change your **gmail** username and password to your google account. If you enabled 2FA on your gmail account, you have to generate an *application-specific password* for your gmail account first. You would then use this password instead for the `password` variable. Afterwards, change the `subject` and `body` variables accordingly.
 
-That completes the installation! Thanks for checking this project out. 
+That completes the installation! 
+
+---
+
+
+## Limitations
+
+Currently, when talking back to the program, your transcribed audio has to be in the form `*<task name> from <start_time> pm/am or p.m./a.m. to <end_time> pm/am or p.m./a.m.*`
+
+You have to input your tasks every day. This does not have multi-day support. Every morning when the program starts, you input your tasks for that day only. Although I like this aspect as it semi-forces me to wake up.
+
+Thanks for checking this project out.
+
