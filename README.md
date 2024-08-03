@@ -46,6 +46,7 @@ Now the rest is simple. First, run `git clone https://github.com/devdeliw/automa
 2. Within each `.plist` file, you have to change the location to your `python` and `.py` files you cloned from this repo.
    - For example, in the `gettasks.plist` file, you should see the following:
 
+
    ```xml
    <string>/Users/devaldeliwala/.../python</string>
    <string>/Users/devaldeliwala/.../task_input.py</string>
@@ -53,6 +54,7 @@ Now the rest is simple. First, run `git clone https://github.com/devdeliw/automa
 
    - You need to replace the first string `/Users/devaldeliwala/.../python` with the path to the python you use. You also need to replace the second string `/Users/devaldeliwala/.../task_input.py` with the path to your `task_input.py` file in your cloned repo folder.
    - Additionally, to set the time for the program to ask for your tasks of the day, change the following:
+
 
    ```xml
    <key>Hour</key>
