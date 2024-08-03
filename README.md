@@ -75,7 +75,7 @@ https://github.com/devdeliw/automated_task_scheduling` in your terminal.
    and `.py` files you cloned from this repo. 
    - For example in the `gettasks.plist` file, you should see the following: 
    
-![](images/gettasks_plist.png) 
+![](images/gettasks_plist_string.png) 
 
    - You need to replace the first string `/Users/devaldeliwala/.../python` to the 
      python you use. You also need to replace the second string 
@@ -84,7 +84,8 @@ https://github.com/devdeliw/automated_task_scheduling` in your terminal.
    - Additionally, to set the time for the program to ask for your tasks of the
      day, change the following: 
      
-![](images/gettasks_plist_calendar.png) 
+![](images/gettasks_plist_string.png) 
+
    - replace it says `7` under 'Hour' and `0` under 'Minute,' with your time.
      For example, to change it to start the `task_input.py` file at 9:30 AM,
      replace `7` with `9`, and `0` with `30`. If, for any reason, you want to
