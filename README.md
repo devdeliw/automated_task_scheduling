@@ -84,7 +84,7 @@ https://github.com/devdeliw/automated_task_scheduling` in your terminal.
    - Additionally, to set the time for the program to ask for your tasks of the
      day, change the following: 
      
-![](images/gettasks_plist_string.png) 
+![](images/gettasks_plist_key.png) 
 
    - replace it says `7` under 'Hour' and `0` under 'Minute,' with your time.
      For example, to change it to start the `task_input.py` file at 9:30 AM,
